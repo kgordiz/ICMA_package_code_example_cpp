@@ -1,7 +1,0 @@
-#Number of Atoms at left & right sections
-1205
-#Number of considered modes
-4
-#EveryThis (Output modal Qn every this steps)
-5
-
