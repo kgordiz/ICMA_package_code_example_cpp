@@ -1,0 +1,69 @@
+ echo screen
+
+# boundary and atoms--------------------------------------------------------------------------------
+
+ ##communicate	single vel yes
+ comm_modify 	vel yes
+
+ boundary	p p p
+ units          metal
+ atom_style	atomic
+ read_data 	lattice.xyz
+
+#potential------------------------------------------------------------------------
+
+ pair_style 	tersoff
+ pair_coeff	* * SiCGe.tersoff Si(D) Si(D) Ge Ge
+
+# initial velocities-------------------------------------------------------------------
+
+ variable       T01 equal 450   #Temperature(K)
+ variable       T02 equal 320   #Temperature(K)
+ velocity       all create ${T01} 999999 rot yes mom yes
+
+# Relaxing the Imported structure of Argon in the desired temperature------------------
+
+ fix		NVE_relax1 all nve
+ fix 		rescaling1 all temp/rescale 1 ${T02} ${T02} 0.01 1.0
+ thermo 	1000
+ thermo_style   custom step temp press vol
+ timestep 	0.5e-3		#1fs
+ run		50000
+ unfix		rescaling1
+ unfix		NVE_relax1
+
+ fix		npt0 all npt temp ${T02} ${T02} 10.0 iso 0.0 0.0 5.0
+ thermo 	1000
+ thermo_style   custom step temp press vol
+ timestep 	0.5e-3		#1fs
+ run		100000
+ unfix 		npt0
+
+ velocity 	all set 0.0 0.0 0.0
+ minimize 	1.0e-8 1.0e-8 100 1000
+
+ velocity       all create ${T02} 159301 rot yes mom yes
+
+ fix		NVE_relax2 all nve
+ fix 		rescaling2 all temp/rescale 1 ${T02} ${T02} 0.01 1.0
+ thermo 	1000
+ thermo_style   custom step temp press vol
+ timestep 	0.5e-3		#1fs
+ run		50000
+ unfix		rescaling2
+ unfix		NVE_relax2
+
+ fix		NVE_relax2 all nve
+ fix 		lang2 all langevin ${T02} ${T02} 100.0 699483 zero yes
+ thermo 	1000
+ timestep 	0.5e-3		#1fs
+ run		1000000
+ unfix		lang2
+ unfix		NVE_relax2
+
+ fix		NVE_relax1 all nve
+ thermo 	1000
+ thermo_style   custom step temp
+ timestep 	0.5e-3		#1fs
+ run		10000000
+

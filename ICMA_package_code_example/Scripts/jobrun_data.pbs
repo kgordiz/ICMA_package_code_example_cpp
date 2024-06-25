@@ -1,0 +1,13 @@
+#PBS -N SiGejobname
+#PBS -q queuename
+#PBS -o job.output 
+#PBS -j oe
+#PBS -l nodes=1:ppn=4:ib
+#PBS -l walltime=requiredtime
+
+cd $PBS_O_WORKDIR
+
+find /tmp/openmpi-sessions-${USER}* -maxdepth 1 -type f -exec rm {} \; 
+mpirun -np 4 ./lmp_mpi_tersoff_summodes_center <in.SiGe
+
+
