@@ -12,4 +12,4 @@ This folder contains the required files for a sample interface conductance modal
 Performing
 ```make```
 in the "post_processing_code_cpp" folder will compile the code. to run you can execute:
-```./my_program```
+```./ICMA_pp```
