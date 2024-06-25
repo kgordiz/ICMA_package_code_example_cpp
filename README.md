@@ -10,6 +10,6 @@ This folder contains the required files for a sample interface conductance modal
 3) ev_real.txt includes the eigen vectors for the modes that you want to do the calculations for. For this example, there are 4 modes included in the calculations. Each column is an eigen vector. N atoms in the system, hence there are 3*N numbers in each column. Usually, we submit multiple simulation jobs (in different folders) and each job deals with a different group of modes. Based on our experience, if you put all the modes in one folder, the calculations can get a very long time.
 
 Performing
-'make'
+'''make'''
 in the xxx folder will compile the code. to run you can execute:
 
