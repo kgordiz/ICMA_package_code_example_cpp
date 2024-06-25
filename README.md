@@ -9,11 +9,7 @@ This folder contains the required files for a sample interface conductance modal
 
 3) ev_real.txt includes the eigen vectors for the modes that you want to do the calculations for. For this example, there are 4 modes included in the calculations. Each column is an eigen vector. N atoms in the system, hence there are 3*N numbers in each column. Usually, we submit multiple simulation jobs (in different folders) and each job deals with a different group of modes. Based on our experience, if you put all the modes in one folder, the calculations can get a very long time.
 
-If you want to make all those folders automatically, some bash scripting is needed. The scripts that I used for this automatic folder preparation + the FFT codes that I used for correlation calculations + the contour_factory folder that calculates all the cross correlations between all the modes (which we represented in contours - examples can be seen in our published papers) are all in the Scripts folder. 
+Performing
+'make'
+in the xxx folder will compile the code. to run you can execute:
 
-
-Under Scripts, the written C++ codes are:
-- ave_need_N1N2.cpp
-- calc_go_contour_source.cpp
-- cor_fft_c.cpp
-- mode_averaging_AC_CCs.cpp
